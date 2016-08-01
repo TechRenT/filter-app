@@ -1,5 +1,11 @@
+{% extends "layout.html" %}
+
+{% block title %}Keywords{% endblock %}
+
+{% block content %}
 <ol>
 {% for keyword in keywords %}
     <li>{{ keyword }}</li>
 {% endfor %}
 </ol>
+{% endblock %}
