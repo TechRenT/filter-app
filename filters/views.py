@@ -1,9 +1,8 @@
-from django.http import HttpResponse
+from django.shortcuts import render
 
 from .models import Filter
 
 # Create your views here.
 def filter_keywords_list(request):
     keywords = Filter.objects.all()
-    output = ", ".join([str(keyword) for keyword in keywords])
-    return HttpResponse(output)
+    return render(request, 'filters/keywords_list.html', {'keywords': keywords})
