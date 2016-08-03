@@ -68,7 +68,4 @@ def upload_file(request):
         form = forms.UploadFileForm()
     return render(request, 'filters/upload.html', {'form': form})
 
-def contact_form(request): # delete later
-    form = forms.ContactForm()
-    return render(request, 'filters/contact.html', {'form': form})
     
