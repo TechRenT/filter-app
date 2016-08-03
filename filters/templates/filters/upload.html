@@ -3,17 +3,19 @@
 {% block title %}Filter App{% endblock %}
 
 {% block content %}
-    <div>
-        <h1>Upload a csv file in utf-8 format</h1>
-        <form enctype="multipart/form-data" action="" method="POST">
-            {{ form.as_p }}
-            {% csrf_token %}
-            <input type="submit" value="Upload">
-        </form>
-        <p>There are {{ raw_urls|length }} raw urls.</p>
-        <p>There are {{ refine_raw_urls|length }} refined raw urls.</p>
-        <p>There are {{ bad_urls|length }} bad urls.</p>
-        <p>There are {{ good_urls|length }} good urls.</p>
-        <p>Download the good raw urls in csv format <a href="/media/cleanurls.csv">here</a></p>
-    </div>
+    <h1 class="display-1">Filter App</h1>
+    <p class="lead">Clean your raw urls by filtering and deleting bad urls!</p>
+    <p></p>
+    <p>Please upload your raw urls in csv format below.</p>
+    <form enctype="multipart/form-data" action="" method="POST">
+        {{ form.as_p }}
+        {% csrf_token %}
+        <input type="submit" value="Filter" class="btn btn-success">
+    </form>
+    <p></p>
+    <p>There are {{ raw_urls|length }} raw urls.</p>
+    <p>There are {{ refine_raw_urls|length }} refined raw urls.</p>
+    <p>There are {{ bad_urls|length }} bad urls.</p>
+    <p>There are {{ good_urls|length }} good urls.</p>
+    <p>Download the good raw urls in csv format <a href="/media/cleanurls.csv">here</a></p>
 {% endblock %}
