@@ -1,0 +1,22 @@
+{% extends "filters/layout.html" %}
+{% load widget_tweaks %}
+
+{% block title %}Contact{% endblock %}
+
+{% block content %}
+    <form action="" method="POST">
+        {% for hidden in form.hidden_fields %}
+            {{ hidden }}
+        {% endfor %}
+
+        {% for field in form.visible_fields %}
+          <div class="form-group">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field|add_class:'form-control' }}
+            {% for error in field.errors %}
+              <span class="help-block">{{ error }}</span>
+            {% endfor %}
+          </div>
+        {% endfor %}
+    </form>
+{% endblock %}
