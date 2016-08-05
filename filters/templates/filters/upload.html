@@ -26,8 +26,7 @@
     </form>
     <p></p>
     <p>There are {{ raw_urls|length }} raw urls.</p>
-    <p>There are {{ refine_raw_urls|length }} refined raw urls.</p>
-    <p>There are {{ bad_urls|length }} bad urls.</p>
-    <p>There are {{ good_urls|length }} good urls.</p>
+    <p>There are {{ bad_urls|length }} bad raw urls.</p>
+    <p>There are {{ good_urls|length }} good raw urls.</p>
     <p>Download the good raw urls in csv format <a href="/media/cleanurls.csv">here</a></p>
 {% endblock %}
