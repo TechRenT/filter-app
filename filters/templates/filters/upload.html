@@ -4,29 +4,53 @@
 {% block title %}Filter App{% endblock %}
 
 {% block content %}
-    <h1 class="display-1">Filter App</h1>
-    <p class="lead">Clean your raw urls by filtering and deleting bad urls!</p>
-    <p></p>
-    <p>Please upload your raw urls in csv format below.</p>
-    <form enctype="multipart/form-data" action="" method="POST">
-        {% for hidden in form.hidden_fields %}
-            {{ hidden }}
-        {% endfor %}
+    <div class="jumbotron jumbotron-fluid bg-success">
+      <div class="container text-sm-center">
+        <h1 class="display-2">Filter App</h1>
+        <p class="lead">Clean your raw urls by filtering and deleting bad urls!</p>
+      </div>
+    </div>
+    <div>
+      <h4 class="m-b-2">Please upload your raw urls in csv format below.</h4>
+      <form enctype="multipart/form-data" action="" method="POST">
+          {% for hidden in form.hidden_fields %}
+              {{ hidden }}
+          {% endfor %}
 
-        {% for field in form.visible_fields %}
-            <div class="form-group">
-            <label class="custom-file">
-            {{ field|add_class:'custom-file-input' }}
-            <span class="custom-file-control"></span>
-            </label>
-            </div>
-        {% endfor %}
-        {% csrf_token %}
-        <input type="submit" value="Start Filter" class="btn btn-success">
-    </form>
-    <p></p>
-    <p>There are {{ raw_urls|length }} raw urls.</p>
-    <p>There are {{ bad_urls|length }} bad raw urls.</p>
-    <p>There are {{ good_urls|length }} good raw urls.</p>
-    <p>Download the good raw urls in csv format <a href="/media/cleanurls.csv">here</a></p>
+          {% for field in form.visible_fields %}
+              <div class="form-group">
+                <label class="custom-file">
+                {{ field|add_class:'custom-file-input' }}
+                <span class="custom-file-control"></span>
+                </label>
+              </div>
+          {% endfor %}
+          {% csrf_token %}
+          <input type="submit" value="Start Filter" class="btn btn-success btn-lg">
+      </form>
+    </div>
+    <hr>
+    <div class="row m-b-3">
+      <div class="col-lg-6 push-lg-3">
+        <ul class="list-group">
+          <li class="list-group-item">
+            <h5 class="list-group-item-heading">Number of raw urls
+              <span class="tag tag-info tag-pill pull-xs-right">{{ raw_urls|length }}</span>
+            </h5>
+          </li>
+          <li class="list-group-item">
+            <h5 class="list-group-item-heading">Number of bad raw urls
+              <span class="tag tag-danger tag-pill pull-xs-right">{{ bad_urls|length }}</span>
+            </h5>
+          </li>
+          <li class="list-group-item">
+            <h5 class="list-group-item-heading">Number of good raw urls
+              <a href="/media/cleanurls.csv"><span class="tag tag-success tag-pill pull-xs-right">{{ good_urls|length }}</span></a>
+              <a href="/media/cleanurls.csv"><span class="tag tag-success tag-pill pull-xs-right">Download</span></a>
+            </h5>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!--<p>Download the good raw urls in csv format <a href="/media/cleanurls.csv">here</a></p>-->
 {% endblock %}
