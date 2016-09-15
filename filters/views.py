@@ -1,4 +1,6 @@
-from django.shortcuts import render
+from django.core.urlresolvers import reverse
+from django.http import HttpResponseRedirect
+from django.shortcuts import render, get_object_or_404
 
 from . import forms
 from .models import Filter
@@ -30,5 +32,25 @@ def upload_file(request):
     else:
         form = forms.UploadFileForm()
     return render(request, 'filters/upload.html', {'form': form})
+
+def keyword_create(request):
+    form = forms.KeywordForm
+    if request.method == 'POST':
+        form = forms.KeywordForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('filter:keywords'))
+    return render(request, 'filters/keyword_form.html', {'form': form})
+
+def keyword_edit(request, keyword_pk):
+    keyword = get_object_or_404(Filter, pk=keyword_pk)
+    form = forms.KeywordForm(instance=keyword)
+    if request.method == 'POST':
+        form = forms.KeywordForm(instance=keyword, data=request.POST)
+        if form.is_valid():
+            form.save()
+        return HttpResponseRedirect(reverse('filter:keywords'))
+    return render(request, 'filters/keyword_form.html', {'form': form})
+    
 
     

@@ -3,9 +3,22 @@
 {% block title %}Keywords{% endblock %}
 
 {% block content %}
-<ol>
-{% for keyword in keywords %}
-    <li>{{ keyword }}</li>
-{% endfor %}
-</ol>
+    <div class="jumbotron jumbotron-fluid bg-success">
+        <div class="container text-sm-center">
+            <h1 class="display-2">Filter App</h1>
+            <p class="lead">Clean your raw urls by filtering and deleting bad urls!</p>
+        </div>
+    </div>
+    <div>
+    <h4 class="m-b-2">Keyword List</h4>
+    <h4>Total: {{ keywords|length }}</h4>
+    <a href="{% url 'filter:keyword_create' %}" class="btn btn-success m-y-2">Add Keyword</a>
+    <ul class="list-group">
+    {% for keyword in keywords %}
+        <li class="list-group-item">
+        <a href="{% url 'filter:keyword_edit' keyword_pk=keyword.pk %}"><span class="tag tag-info tag-pill pull-xs-right">Edit</span></a>
+        {{ keyword }}
+        </li>
+    {% endfor %}
+    </ul>
 {% endblock %}
