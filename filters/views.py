@@ -51,7 +51,11 @@ def keyword_edit(request, keyword_pk):
             form.save()
         return HttpResponseRedirect(reverse('filter:keywords'))
     return render(request, 'filters/keyword_form.html', {'form': form})
-#delete_branch
+
+def keyword_delete(request, keyword_pk):
+	keyword = get_object_or_404(Filter, pk=keyword_pk).delete()
+	return HttpResponseRedirect(reverse('filter:keywords'))
+
     
 
     
