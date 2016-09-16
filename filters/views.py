@@ -53,8 +53,12 @@ def keyword_edit(request, keyword_pk):
     return render(request, 'filters/keyword_form.html', {'form': form})
 
 def keyword_delete(request, keyword_pk):
-	keyword = get_object_or_404(Filter, pk=keyword_pk).delete()
-	return HttpResponseRedirect(reverse('filter:keywords'))
+    keyword = get_object_or_404(Filter, pk=keyword_pk).delete()
+    return HttpResponseRedirect(reverse('filter:keywords'))
+
+def url_to_domain(request):
+    form = forms.UrlToDomainForm
+    return render(request, 'filters/url_to_domain.html', {'form': form})
 
     
 

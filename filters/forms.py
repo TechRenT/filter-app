@@ -13,3 +13,7 @@ class KeywordForm(forms.ModelForm):
             'order',
             'keyword'
         ]
+
+
+class UrlToDomainForm(forms.Form):
+input_urls = forms.CharField(widget=forms.Textarea)
