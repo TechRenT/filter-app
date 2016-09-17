@@ -1,20 +1,21 @@
-{#{% extends "filters/layout.html" %}
+{% extends "filters/layout.html" %}
 
 {% block title %}URL To Domain{% endblock %}
 
 {% block content %}
-    <div class="jumbotron jumbotron-fluid bg-success">
-      <div class="container text-sm-center">
-        <h1 class="display-2">URL To Domain App</h1>
-        <p class="lead">Convert your URLs to Domain</p>
+    <div class="container-fluid">
+      <div class="jumbotron jumbotron-fluid bg-success">
+        <div class="container text-sm-center">
+          <h2 class="display-2">URL To Domain App</h2>
+          <p class="lead">Convert your URLs to Domain</p>
+        </div>
+      </div>
+      <div class="row">
+        <form action="" method="POST">
+            {{ form.as_p }}
+            {% csrf_token %}
+            <input type="submit" value="Convert" class="btn btn-success btn-lg">
+        </form>
       </div>
     </div>
-    <div>
-      <h4 class="m-b-2">Input URLs</h4>
-      <form action="" method="POST">
-          {{ form }}
-          {% csrf_token %}
-          <input type="submit" value="Convert" class="btn btn-success btn-lg">
-      </form>
-    </div>
-{% endblock %}#}
+{% endblock %}

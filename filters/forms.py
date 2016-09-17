@@ -16,4 +16,4 @@ class KeywordForm(forms.ModelForm):
 
 
 class UrlToDomainForm(forms.Form):
-input_urls = forms.CharField(widget=forms.Textarea)
+    input_urls = forms.CharField(widget=forms.Textarea)

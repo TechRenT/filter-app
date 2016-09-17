@@ -3,18 +3,20 @@
 {% block title %}Add Keyword{% endblock %}
 
 {% block content %}
-    <div class="jumbotron jumbotron-fluid bg-success">
-      <div class="container text-sm-center">
-        <h1 class="display-2">Filter App</h1>
-        <p class="lead">Clean your raw urls by filtering and deleting bad urls!</p>
+    <div class="container text-xs-center">
+      <div class="jumbotron jumbotron-fluid bg-success">
+        <div class="container text-sm-center">
+          <h1 class="display-2">Filter App</h1>
+          <p class="lead">Clean your raw urls by filtering and deleting bad urls!</p>
+        </div>
       </div>
-    </div>
-    <div>
-      <h4 class="m-b-2">Add Keyword</h4>
-      <form action="" method="POST">
-          {{ form.as_p }}
-          {% csrf_token %}
-          <input type="submit" value="Save" class="btn btn-success btn-lg">
-      </form>
+      <div>
+        <h4 class="m-b-2">Add Keyword</h4>
+        <form action="" method="POST">
+            {{ form.as_p }}
+            {% csrf_token %}
+            <input type="submit" value="Save" class="btn btn-success btn-lg">
+        </form>
+      </div>
     </div>
 {% endblock %}
