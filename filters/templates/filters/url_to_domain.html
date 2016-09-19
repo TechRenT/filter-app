@@ -1,21 +1,41 @@
 {% extends "filters/layout.html" %}
+{% load widget_tweaks %}
 
 {% block title %}URL To Domain{% endblock %}
 
 {% block content %}
-    <div class="container-fluid">
-      <div class="jumbotron jumbotron-fluid bg-success">
-        <div class="container text-sm-center">
-          <h2 class="display-2">URL To Domain App</h2>
-          <p class="lead">Convert your URLs to Domain</p>
+    <div class="container text-xs-center">
+        <div class="jumbotron jumbotron-fluid bg-success">
+            <div class="container text-sm-center">
+                <h2 class="display-2">URL To Domain App</h2>
+                <p class="lead">Convert your URLs to Domain</p>
+            </div>
         </div>
-      </div>
-      <div class="row">
         <form action="" method="POST">
-            {{ form.as_p }}
+            {% for hidden in form.hidden_fields %}
+                {{ hidden }}
+            {% endfor %}
+
+            <h4 class="m-b-2">Input URLs</h4>
+            {% for field in form.visible_fields %}
+                <div class="form-group">
+                    {{ field|add_class:'form-control' }}
+                    {#<textarea class="form-control" id="inputurl" rows="15"></textarea>#}
+                </div>
+            {% endfor %}
             {% csrf_token %}
             <input type="submit" value="Convert" class="btn btn-success btn-lg">
         </form>
-      </div>
+        {% if domain_list %}
+            <h4 class="m-t-2">View Result</h4>
+            <form>
+                <div class="form-group">
+                    <textarea class="form-control m-t-2" name="result" rows="15">{% for domain in domain_list %}
+{{ domain }}{% endfor %}</textarea>
+                <div>
+            </form>
+        {% endif %}
+        <hr class="m-t-3">
+        <h6>Version 1.0 by Renelle Tigue</h6>
     </div>
 {% endblock %}

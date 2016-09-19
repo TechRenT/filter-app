@@ -1,3 +1,4 @@
+import tldextract
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
@@ -34,7 +35,7 @@ def upload_file(request):
     return render(request, 'filters/upload.html', {'form': form})
 
 def keyword_create(request):
-    form = forms.KeywordForm
+    form = forms.KeywordForm()
     if request.method == 'POST':
         form = forms.KeywordForm(request.POST)
         if form.is_valid():
@@ -57,7 +58,16 @@ def keyword_delete(request, keyword_pk):
     return HttpResponseRedirect(reverse('filter:keywords'))
 
 def url_to_domain(request):
-    form = forms.UrlToDomainForm
+    form = forms.UrlToDomainForm()
+    if request.method == 'POST':
+        form = forms.UrlToDomainForm(request.POST)
+        if form.is_valid():
+            urls = form.cleaned_data['input_urls'].splitlines()
+            domain_list = []
+            for url in urls:
+                domain = tldextract.extract(url).registered_domain
+                domain_list.append(domain)
+            return render(request, 'filters/url_to_domain.html', {'form': form, 'domain_list': domain_list})
     return render(request, 'filters/url_to_domain.html', {'form': form})
 
     
