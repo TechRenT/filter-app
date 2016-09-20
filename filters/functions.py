@@ -1,4 +1,5 @@
 import csv
+import tldextract
 
 def handle_uploaded_file(f):
     with open('media/raw_urls.csv', 'wb+') as destination:
@@ -21,6 +22,8 @@ def filter(raw_urls, keywords, bad_urls, good_urls):
                     bad_urls.append(url)
                     break
             if url not in bad_urls:
+                domain = tldextract.extract(url[0]).registered_domain
+                url.insert(0, domain)
                 good_urls.append(url)
         else:
             bad_urls.append(url)
