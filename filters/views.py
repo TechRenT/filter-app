@@ -22,14 +22,16 @@ def upload_file(request):
             good_urls = []
             keywords = [str(keyword) for keyword in Filter.objects.all()]
             functions.csv_reader('media/raw_urls.csv', raw_urls)
-            functions.filter(raw_urls, keywords, bad_urls, good_urls)
+            if form.cleaned_data['shepard_urls'] == True:
+                functions.filter_shepard(raw_urls, keywords, bad_urls, good_urls)
+            else:
+                functions.filter_arrow(raw_urls, keywords, bad_urls, good_urls)
             functions.save_csv('media/cleanurls.csv', good_urls)
             functions.save_csv('media/badurls.csv', bad_urls)
             return render(request, 'filters/upload.html', {'form': form,
                                                            'raw_urls': raw_urls,
                                                            'good_urls': good_urls,
-                                                           'bad_urls': bad_urls,
-                                                           'keywords': keywords})
+                                                           'bad_urls': bad_urls,})
     else:
         form = forms.UploadFileForm()
     return render(request, 'filters/upload.html', {'form': form})

@@ -13,8 +13,8 @@ def csv_reader(filename, list):
         for row in read_csv:
             list.append(row)
 
-def filter(raw_urls, keywords, bad_urls, good_urls):
-    """Check each raw url whether it's good or bad"""
+def filter_shepard(raw_urls, keywords, bad_urls, good_urls):
+    """Check each raw url whether it's good or bad for shepard raw urls"""
     for url in raw_urls:
         if url[2] == "200 OK" and int(url[3]) >= 3:
             for keyword in keywords:
@@ -27,6 +27,18 @@ def filter(raw_urls, keywords, bad_urls, good_urls):
                 good_urls.append(url)
         else:
             bad_urls.append(url)
+
+def filter_arrow(raw_urls, keywords, bad_urls, good_urls):
+    """Check each raw url whether it's good or bad for shepard raw urls"""
+    for url in raw_urls:
+        for keyword in keywords:
+            if keyword in url[0]:
+                bad_urls.append(url)
+                break
+        if url not in bad_urls:
+            domain = tldextract.extract(url[0]).registered_domain
+            url.insert(0, domain)
+            good_urls.append(url)
 
 def save_csv(filename, list):
     """Save raw urls into a CSV file"""

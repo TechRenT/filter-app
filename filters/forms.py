@@ -4,6 +4,7 @@ from . import models
 
 class UploadFileForm(forms.Form):
     file = forms.FileField()
+    shepard_urls = forms.BooleanField(initial=True, required=False)
 
 
 class KeywordForm(forms.ModelForm):

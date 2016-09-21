@@ -14,6 +14,7 @@
       <div>
         <h4 class="m-b-2">Please upload your raw urls in csv format below.</h4>
         <form enctype="multipart/form-data" action="" method="POST">
+            {% comment %}
             {% for hidden in form.hidden_fields %}
                 {{ hidden }}
             {% endfor %}
@@ -26,6 +27,8 @@
                   </label>
                 </div>
             {% endfor %}
+            {% endcomment %}
+            {{ form.as_p }}
             {% csrf_token %}
             <input type="submit" value="Start Filter" class="btn btn-success btn-lg">
         </form>
