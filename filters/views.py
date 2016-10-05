@@ -2,6 +2,7 @@ import tldextract
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
+from django.views.generic import ListView, DetailView
 
 from . import forms
 from .models import Filter
@@ -72,6 +73,9 @@ def url_to_domain(request):
             return render(request, 'filters/url_to_domain.html', {'form': form, 'domain_list': domain_list})
     return render(request, 'filters/url_to_domain.html', {'form': form})
 
-    
+
+class KeywordListView(ListView):
+    context_object_name = "keywords"
+    model = Filter
 
     

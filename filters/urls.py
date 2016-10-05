@@ -9,4 +9,5 @@ urlpatterns = [
     url(r'^(?P<keyword_pk>\d+)/keyword_create/$', views.keyword_edit, name='keyword_edit'),
     url(r'^(?P<keyword_pk>\d+)/keyword_delete/$', views.keyword_delete, name='keyword_delete'),
     url(r'^url_to_domain/$', views.url_to_domain, name='url_to_domain'),
+    url(r'^keywords_cbv/$', views.KeywordListView.as_view(), name='keywords_cbv')
 ]
