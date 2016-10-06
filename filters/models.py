@@ -1,4 +1,6 @@
+from django.core.urlresolvers import reverse
 from django.db import models
+
 
 # Create your models here.
 class Filter(models.Model):
@@ -8,3 +10,6 @@ class Filter(models.Model):
     
     def __str__(self):
         return self.keyword
+
+    def get_absolute_url(self):
+        return reverse("filter:keywords_cbv")

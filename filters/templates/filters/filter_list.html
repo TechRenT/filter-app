@@ -13,7 +13,7 @@
         <div>
         <h4 class="m-b-2">Keyword List</h4>
         <h4>Total: {{ keywords|length }}</h4>
-        <a href="{% url 'filter:keyword_create' %}" class="btn btn-success m-y-2">Add Keyword</a>
+        <a href="{% url 'filter:keyword_create_cbv' %}" class="btn btn-success m-y-2">Create Keyword</a>
         <ul class="list-group">
         {% for keyword in keywords %}
             <li class="list-group-item">
