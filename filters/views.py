@@ -1,5 +1,5 @@
 import tldextract
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse, reverse_lazy
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import (
@@ -89,5 +89,10 @@ class KeywordCreateView(CreateView):
 class KeywordUpdateView(UpdateView):
     fields = ("order", "keyword")
     model = Filter
+
+
+class KeywordDeleteView(DeleteView):
+    model = Filter
+    success_url = reverse_lazy("filter:keywords_cbv")
 
     

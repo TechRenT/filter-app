@@ -11,5 +11,6 @@ urlpatterns = [
     url(r'^url_to_domain/$', views.url_to_domain, name='url_to_domain'),
     url(r'^keywords_cbv/$', views.KeywordListView.as_view(), name='keywords_cbv'),
     url(r'^keyword_create_cbv/$', views.KeywordCreateView.as_view(), name='keyword_create_cbv'),
-    url(r'^(?P<keyword_pk>\d+)/keyword_edit_cbv/$', views.KeywordUpdateView.as_view(), name='keyword_edit_cbv'),
+    url(r'^(?P<pk>\d+)/keyword_edit_cbv/$', views.KeywordUpdateView.as_view(), name='keyword_edit_cbv'),
+    url(r'^(?P<pk>\d+)/keyword_delete_cbv/$', views.KeywordDeleteView.as_view(), name='keyword_delete_cbv'),
 ]

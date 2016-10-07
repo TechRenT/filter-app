@@ -1,0 +1,22 @@
+{% extends "filters/layout.html" %}
+
+{% block title %}Delete Keyword{% endblock %}
+
+{% block content %}
+    <div class="container text-xs-center">
+      <div class="jumbotron jumbotron-fluid bg-success">
+        <div class="container text-sm-center">
+          <h1 class="display-2">Filter App</h1>
+          <p class="lead">Clean your raw urls by filtering and deleting bad urls!</p>
+        </div>
+      </div>
+      <div>
+        <h4 class="m-b-2">Are you sure you want to delete {{ filter.keyword }}?</h4>
+        <form action="" method="POST">
+            {% csrf_token %}
+            <input type="submit" value="Delete" class="btn btn-danger">
+            <a href="{% url 'filter:keywords_cbv' %}" class="btn btn-info">Cancel</a>
+        </form>
+      </div>
+    </div>
+{% endblock %}
