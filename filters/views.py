@@ -1,4 +1,5 @@
 import tldextract
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
@@ -10,6 +11,7 @@ from django.views.generic import (
 from . import forms
 from .models import Filter
 from . import functions
+from . import mixins
 
 
 def filter_keywords_list(request):
@@ -82,16 +84,21 @@ class KeywordListView(ListView):
     model = Filter
 
 
-class KeywordCreateView(CreateView):
+class KeywordCreateView(LoginRequiredMixin, mixins.PageTitleMixin, CreateView):
+    fields = ("order", "keyword")
+    model = Filter
+    page_title = "Create Keyword"
+
+class KeywordUpdateView(LoginRequiredMixin, mixins.PageTitleMixin, UpdateView):
     fields = ("order", "keyword")
     model = Filter
 
-class KeywordUpdateView(UpdateView):
-    fields = ("order", "keyword")
-    model = Filter
+    def get_page_title(self):
+        obj = self.get_object()
+        return "Edit {}".format(obj.keyword)
 
 
-class KeywordDeleteView(DeleteView):
+class KeywordDeleteView(LoginRequiredMixin, DeleteView):
     model = Filter
     success_url = reverse_lazy("filter:keywords_cbv")
 
