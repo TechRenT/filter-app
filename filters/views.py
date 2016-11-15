@@ -1,4 +1,5 @@
 import tldextract
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.http import HttpResponseRedirect
@@ -14,11 +15,13 @@ from . import functions
 from . import mixins
 
 
+@login_required
 def filter_keywords_list(request):
     keywords = Filter.objects.all()
     return render(request, 'filters/keywords_list.html', {'keywords': keywords})
 
 
+@login_required
 def upload_file(request):
     if request.method == 'POST':
         form = forms.UploadFileForm(request.POST, request.FILES)
@@ -44,6 +47,7 @@ def upload_file(request):
     return render(request, 'filters/upload.html', {'form': form})
 
 
+@login_required
 def keyword_create(request):
     form = forms.KeywordForm()
     if request.method == 'POST':
@@ -54,6 +58,7 @@ def keyword_create(request):
     return render(request, 'filters/keyword_form.html', {'form': form})
 
 
+@login_required
 def keyword_edit(request, keyword_pk):
     keyword = get_object_or_404(Filter, pk=keyword_pk)
     form = forms.KeywordForm(instance=keyword)
@@ -65,11 +70,13 @@ def keyword_edit(request, keyword_pk):
     return render(request, 'filters/keyword_form.html', {'form': form})
 
 
+@login_required
 def keyword_delete(request, keyword_pk):
     keyword = get_object_or_404(Filter, pk=keyword_pk).delete()
     return HttpResponseRedirect(reverse('filter:keywords'))
 
 
+@login_required
 def url_to_domain(request):
     form = forms.UrlToDomainForm()
     if request.method == 'POST':
@@ -84,7 +91,7 @@ def url_to_domain(request):
     return render(request, 'filters/url_to_domain.html', {'form': form})
 
 
-class KeywordListView(ListView):
+class KeywordListView(LoginRequiredMixin, ListView):
     context_object_name = "keywords"
     model = Filter
 
