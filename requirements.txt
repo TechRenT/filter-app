@@ -1,0 +1,8 @@
+Django==1.9.9
+django-widget-tweaks==1.4.1
+idna==2.1
+requests==2.11.1
+requests-file==1.4
+six==1.10.0
+tldextract==2.0.1
+whitenoise==3.2.1
