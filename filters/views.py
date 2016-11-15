@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse, reverse_lazy
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import (
-    ListView, DetailView,
+    ListView,
     CreateView, UpdateView, DeleteView
 )
 
@@ -17,6 +17,7 @@ from . import mixins
 def filter_keywords_list(request):
     keywords = Filter.objects.all()
     return render(request, 'filters/keywords_list.html', {'keywords': keywords})
+
 
 def upload_file(request):
     if request.method == 'POST':
@@ -42,6 +43,7 @@ def upload_file(request):
         form = forms.UploadFileForm()
     return render(request, 'filters/upload.html', {'form': form})
 
+
 def keyword_create(request):
     form = forms.KeywordForm()
     if request.method == 'POST':
@@ -50,6 +52,7 @@ def keyword_create(request):
             form.save()
             return HttpResponseRedirect(reverse('filter:keywords'))
     return render(request, 'filters/keyword_form.html', {'form': form})
+
 
 def keyword_edit(request, keyword_pk):
     keyword = get_object_or_404(Filter, pk=keyword_pk)
@@ -61,9 +64,11 @@ def keyword_edit(request, keyword_pk):
         return HttpResponseRedirect(reverse('filter:keywords'))
     return render(request, 'filters/keyword_form.html', {'form': form})
 
+
 def keyword_delete(request, keyword_pk):
     keyword = get_object_or_404(Filter, pk=keyword_pk).delete()
     return HttpResponseRedirect(reverse('filter:keywords'))
+
 
 def url_to_domain(request):
     form = forms.UrlToDomainForm()
@@ -89,6 +94,7 @@ class KeywordCreateView(LoginRequiredMixin, mixins.PageTitleMixin, CreateView):
     model = Filter
     page_title = "Create Keyword"
 
+
 class KeywordUpdateView(LoginRequiredMixin, mixins.PageTitleMixin, UpdateView):
     fields = ("order", "keyword")
     model = Filter
@@ -102,4 +108,3 @@ class KeywordDeleteView(LoginRequiredMixin, DeleteView):
     model = Filter
     success_url = reverse_lazy("filter:keywords_cbv")
 
-    
