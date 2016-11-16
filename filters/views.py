@@ -88,7 +88,7 @@ def url_to_domain(request):
                 domain = tldextract.extract(url).registered_domain
                 domain_list.append(domain)
             return render(request, 'filters/url_to_domain.html', {'form': form, 'domain_list': domain_list})
-    return render(request, 'filters/url_to_domain.html', {'form': form})
+    return render(request, 'filters/url_to_domain.html', {'form': form,})
 
 
 class KeywordListView(LoginRequiredMixin, ListView):
