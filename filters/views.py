@@ -8,6 +8,8 @@ from django.views.generic import (
     ListView,
     CreateView, UpdateView, DeleteView
 )
+from urllib.request import Request, urlopen
+from urllib.error import URLError, HTTPError
 
 from . import forms
 from .models import Filter
@@ -89,6 +91,50 @@ def url_to_domain(request):
                 domain_list.append(domain)
             return render(request, 'filters/url_to_domain.html', {'form': form, 'domain_list': domain_list})
     return render(request, 'filters/url_to_domain.html', {'form': form,})
+
+
+def qualify_url(request):
+    form = forms.QualifyURLForm()
+    if request.method == 'POST':
+        form = forms.QualifyURLForm(request.POST)
+        if form.is_valid():
+            keywords = [
+                "travel warning",
+                "travel warnings",
+                "travel alert",
+                "travel alerts",
+                "travel safety",
+                "travel advisory",
+                "travel advisories",
+                "travel",
+                "traveler",
+                "travelers",
+                "traveling",
+                "warning",
+                "warnings",
+                "alert",
+                "alerts",
+            ]
+            keywords_present = []
+            try:
+                raw_url = form.cleaned_data['raw_url']
+                req = Request(raw_url, headers={
+                    'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:47.0) Gecko/20100101 Firefox/47.0'})
+                html = urlopen(req).read()
+            except HTTPError as e:
+                print("The server couldn't fulfill the request")
+                print("Error code: ", e.code)
+            except URLError as e:
+                print("We failed to reach a server.")
+                print("Reason: ", e.reason)
+            except:
+                print("Unknown Error")
+            else:
+                for keyword in keywords:
+                    if keyword.lower() in str(html).lower():
+                        keywords_present.append(keyword)
+            return render(request, 'filters/qualify_url.html', {'form': form, 'keywords_present': keywords_present})
+    return render(request, 'filters/qualify_url.html', {'form': form})
 
 
 class KeywordListView(LoginRequiredMixin, ListView):

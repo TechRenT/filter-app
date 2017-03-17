@@ -18,3 +18,7 @@ class KeywordForm(forms.ModelForm):
 
 class UrlToDomainForm(forms.Form):
     input_urls = forms.CharField(widget=forms.Textarea)
+
+
+class QualifyURLForm(forms.Form):
+    raw_url = forms.CharField()
