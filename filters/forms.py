@@ -30,3 +30,7 @@ class QualifyURLFormPaperPreservation(forms.Form):
 
 class QualifyURLFormKaizen(forms.Form):
     raw_url = forms.CharField()
+
+
+class QualifyURLFormHistory(forms.Form):
+    raw_url = forms.CharField()

@@ -251,6 +251,50 @@ def qualify_url_kaizen(request):
     return render(request, 'filters/qualify_url_kaizen.html', {'form': form})
 
 
+@login_required
+def qualify_url_history(request):
+    form = forms.QualifyURLFormHistory()
+    if request.method == 'POST':
+        form = forms.QualifyURLFormHistory(request.POST)
+        if form.is_valid():
+            keywords = [
+                "scrapbook",
+                "scrapbooking",
+                "scrap book",
+                "photo album",
+                "memory book",
+                "commonplace book",
+                "photograph",
+                "extra-illustrating",
+                "extra-illustrated",
+                "grangerizing",
+                "granger",
+                "book of scraps",
+                "memorabilia"
+            ]
+            keywords_present = []
+            try:
+                raw_url = form.cleaned_data['raw_url']
+                req = Request(raw_url, headers={
+                    'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:47.0) Gecko/20100101 Firefox/47.0'})
+                html = urlopen(req).read()
+            except HTTPError as e:
+                print("The server couldn't fulfill the request")
+                print("Error code: ", e.code)
+            except URLError as e:
+                print("We failed to reach a server.")
+                print("Reason: ", e.reason)
+            except:
+                print("Unknown Error")
+            else:
+                for keyword in keywords:
+                    if keyword in str(html).lower():
+                        keywords_present.append(keyword)
+            return render(request, 'filters/qualify_url_history.html',
+                          {'form': form, 'keywords_present': keywords_present})
+    return render(request, 'filters/qualify_url_history.html', {'form': form})
+
+
 class KeywordListView(LoginRequiredMixin, ListView):
     context_object_name = "keywords"
     model = Filter
