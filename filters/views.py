@@ -200,6 +200,57 @@ def qualify_url_paper_preservation(request):
     return render(request, 'filters/qualify_url_paper_preservation.html', {'form': form})
 
 
+@login_required
+def qualify_url_kaizen(request):
+    form = forms.QualifyURLFormKaizen()
+    if request.method == 'POST':
+        form = forms.QualifyURLFormKaizen(request.POST)
+        if form.is_valid():
+            keywords = [
+                "kaizen",
+                "lean",
+                "six sigma",
+                "agile",
+                "scrum",
+                "kanban",
+                "process improvement",
+                "management",
+                "continuous improvement",
+                "5S",
+                "waste elimination",
+                "eliminate waste",
+                "pdca",
+                "plan do check act",
+                "work efficiency",
+                "tqm",
+                "gemba",
+                "sixsigma",
+                "quality improvement",
+                "improvement"
+            ]
+            keywords_present = []
+            try:
+                raw_url = form.cleaned_data['raw_url']
+                req = Request(raw_url, headers={
+                    'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:47.0) Gecko/20100101 Firefox/47.0'})
+                html = urlopen(req).read()
+            except HTTPError as e:
+                print("The server couldn't fulfill the request")
+                print("Error code: ", e.code)
+            except URLError as e:
+                print("We failed to reach a server.")
+                print("Reason: ", e.reason)
+            except:
+                print("Unknown Error")
+            else:
+                for keyword in keywords:
+                    if keyword in str(html).lower():
+                        keywords_present.append(keyword)
+            return render(request, 'filters/qualify_url_kaizen.html',
+                          {'form': form, 'keywords_present': keywords_present})
+    return render(request, 'filters/qualify_url_kaizen.html', {'form': form})
+
+
 class KeywordListView(LoginRequiredMixin, ListView):
     context_object_name = "keywords"
     model = Filter

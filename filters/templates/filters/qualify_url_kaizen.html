@@ -1,0 +1,42 @@
+{% extends "filters/layout.html" %}
+{% load widget_tweaks %}
+
+{% block title %}URL To Domain{% endblock %}
+
+{% block content %}
+    <div class="container text-xs-center">
+        <div class="jumbotron jumbotron-fluid bg-success">
+            <div class="container text-sm-center">
+                <h2 class="display-2">Qualify URL App</h2>
+                <p class="lead">Check URL's content for certain keywords</p>
+                <p class="lead">VR Page: Kaizen</p>
+            </div>
+        </div>
+        <form action="" method="POST">
+            {% for hidden in form.hidden_fields %}
+                {{ hidden }}
+            {% endfor %}
+
+            <h4 class="m-b-2">Raw URL</h4>
+            {% for field in form.visible_fields %}
+                <div class="form-group">
+                    {{ field|add_class:'form-control' }}
+                    {#<textarea class="form-control" id="inputurl" rows="15"></textarea>#}
+                </div>
+            {% endfor %}
+            {% csrf_token %}
+            <input type="submit" value="Check" class="btn btn-success btn-lg">
+        </form>
+        {% if keywords_present %}
+            <h4 class="m-t-2">Keywords: {{ keywords_present|length }}</h4>
+            <hr>
+            <ul>
+            {% for keyword in keywords_present %}
+                <li>{{ keyword }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+        <hr class="m-t-3">
+        <h6>Version 1.0 by Renelle Tigue</h6>
+    </div>
+{% endblock %}

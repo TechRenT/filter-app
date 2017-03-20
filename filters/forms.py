@@ -26,3 +26,7 @@ class QualifyURLForm(forms.Form):
 
 class QualifyURLFormPaperPreservation(forms.Form):
     raw_url = forms.CharField()
+
+
+class QualifyURLFormKaizen(forms.Form):
+    raw_url = forms.CharField()
