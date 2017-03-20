@@ -22,3 +22,7 @@ class UrlToDomainForm(forms.Form):
 
 class QualifyURLForm(forms.Form):
     raw_url = forms.CharField()
+
+
+class QualifyURLFormPaperPreservation(forms.Form):
+    raw_url = forms.CharField()

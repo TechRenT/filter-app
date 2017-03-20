@@ -93,6 +93,7 @@ def url_to_domain(request):
     return render(request, 'filters/url_to_domain.html', {'form': form,})
 
 
+@login_required
 def qualify_url(request):
     form = forms.QualifyURLForm()
     if request.method == 'POST':
@@ -131,10 +132,72 @@ def qualify_url(request):
                 print("Unknown Error")
             else:
                 for keyword in keywords:
-                    if keyword.lower() in str(html).lower():
+                    if keyword in str(html).lower():
                         keywords_present.append(keyword)
             return render(request, 'filters/qualify_url.html', {'form': form, 'keywords_present': keywords_present})
     return render(request, 'filters/qualify_url.html', {'form': form})
+
+
+@login_required
+def qualify_url_paper_preservation(request):
+    form = forms.QualifyURLFormPaperPreservation()
+    if request.method == 'POST':
+        form = forms.QualifyURLFormPaperPreservation(request.POST)
+        if form.is_valid():
+            keywords = [
+                "paper preservation",
+                "photo preservation",
+                "document preservation",
+                "book preservation",
+                "paper conservation",
+                "photo conservation",
+                "document conservation",
+                "book conservation",
+                "preserve paper",
+                "preserve photo",
+                "preserve document",
+                "preserve book",
+                "archive paper",
+                "archive photo",
+                "archive document",
+                "archive book",
+                "protect paper",
+                "protect photo",
+                "protect document",
+                "protect book",
+                "historic preservation",
+                "preservation office",
+                " paper ",
+                " book ",
+                " photo ",
+                "pictures",
+                "photograph",
+                "preservation",
+                "conservation",
+                "library",
+                "museum",
+            ]
+            keywords_present = []
+            try:
+                raw_url = form.cleaned_data['raw_url']
+                req = Request(raw_url, headers={
+                    'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:47.0) Gecko/20100101 Firefox/47.0'})
+                html = urlopen(req).read()
+            except HTTPError as e:
+                print("The server couldn't fulfill the request")
+                print("Error code: ", e.code)
+            except URLError as e:
+                print("We failed to reach a server.")
+                print("Reason: ", e.reason)
+            except:
+                print("Unknown Error")
+            else:
+                for keyword in keywords:
+                    if keyword in str(html).lower():
+                        keywords_present.append(keyword)
+            return render(request, 'filters/qualify_url_paper_preservation.html',
+                          {'form': form, 'keywords_present': keywords_present})
+    return render(request, 'filters/qualify_url_paper_preservation.html', {'form': form})
 
 
 class KeywordListView(LoginRequiredMixin, ListView):
