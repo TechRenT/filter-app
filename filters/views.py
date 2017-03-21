@@ -94,10 +94,15 @@ def url_to_domain(request):
 
 
 @login_required
-def qualify_url(request):
-    form = forms.QualifyURLForm()
+def qualify_url_list(request):
+    return render(request, 'filters/qualify_url_list.html')
+
+
+@login_required
+def qualify_url_travel_warning(request):
+    form = forms.QualifyURLFormTravelWarning()
     if request.method == 'POST':
-        form = forms.QualifyURLForm(request.POST)
+        form = forms.QualifyURLFormTravelWarning(request.POST)
         if form.is_valid():
             keywords = [
                 "travel warning",
@@ -134,8 +139,9 @@ def qualify_url(request):
                 for keyword in keywords:
                     if keyword in str(html).lower():
                         keywords_present.append(keyword)
-            return render(request, 'filters/qualify_url.html', {'form': form, 'keywords_present': keywords_present})
-    return render(request, 'filters/qualify_url.html', {'form': form})
+            return render(request, 'filters/qualify_url_travel_warning.html',
+                          {'form': form, 'keywords_present': keywords_present})
+    return render(request, 'filters/qualify_url_travel_warning.html', {'form': form})
 
 
 @login_required

@@ -20,7 +20,7 @@ class UrlToDomainForm(forms.Form):
     input_urls = forms.CharField(widget=forms.Textarea)
 
 
-class QualifyURLForm(forms.Form):
+class QualifyURLFormTravelWarning(forms.Form):
     raw_url = forms.CharField()
 
 

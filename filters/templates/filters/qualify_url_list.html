@@ -1,0 +1,22 @@
+{% extends "filters/layout.html" %}
+
+{% block title %}Qualify URL List{% endblock %}
+
+{% block content %}
+    <div class="container text-xs-center">
+        <div class="jumbotron jumbotron-fluid bg-success">
+            <div class="container text-sm-center">
+                <p class="display-2">Qualify URL List</p>
+                <p class="lead">Check URL's content for certain keywords</p>
+            </div>
+        </div>
+        <div class="list-group">
+          <a href="{% url 'filter:qualify_url_travel_warning' %}" class="list-group-item list-group-item-action">IMT - Travel Warnings and Alerts</a>
+          <a href="{% url 'filter:qualify_url_paper_preservation' %}" class="list-group-item list-group-item-action">SB - Paper Preservation</a>
+          <a href="{% url 'filter:qualify_url_history' %}" class="list-group-item list-group-item-action">SB - History of Scrapbooking</a>
+          <a href="{% url 'filter:qualify_url_kaizen' %}" class="list-group-item list-group-item-action">CSS - Kaizen</a>
+        </div>
+        <hr class="m-t-3">
+        <h6>Version 1.0 by Renelle Tigue</h6>
+    </div>
+{% endblock %}
