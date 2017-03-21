@@ -29,14 +29,14 @@
         </form>
         {% if keywords_present %}
             <h4 class="m-t-2">Keywords: {{ keywords_present|length }}</h4>
-            <hr>
-            <ul>
-            {% for keyword in keywords_present %}
-                <li>{{ keyword }}</li>
-            {% endfor %}
+            <ul class="list-group">
+                {% for keyword in keywords_present %}
+                <li class="list-group-item">{{ keyword.0 }}
+                    <span class="tag tag-info tag-pill pull-xs-right">{{ keyword.1 }}</span>
+                </li>
+                {% endfor %}
             </ul>
         {% endif %}
-        <hr class="m-t-3">
-        <h6>Version 1.0 by Renelle Tigue</h6>
+        <h6 class="m-t-3">Version 1.0 by Renelle Tigue</h6>
     </div>
 {% endblock %}

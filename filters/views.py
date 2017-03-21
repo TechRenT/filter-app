@@ -138,7 +138,8 @@ def qualify_url_travel_warning(request):
             else:
                 for keyword in keywords:
                     if keyword in str(html).lower():
-                        keywords_present.append(keyword)
+                        counter = str(html).lower().count(keyword)
+                        keywords_present.append([keyword, counter])
             return render(request, 'filters/qualify_url_travel_warning.html',
                           {'form': form, 'keywords_present': keywords_present})
     return render(request, 'filters/qualify_url_travel_warning.html', {'form': form})
@@ -200,7 +201,8 @@ def qualify_url_paper_preservation(request):
             else:
                 for keyword in keywords:
                     if keyword in str(html).lower():
-                        keywords_present.append(keyword)
+                        counter = str(html).lower().count(keyword)
+                        keywords_present.append([keyword, counter])
             return render(request, 'filters/qualify_url_paper_preservation.html',
                           {'form': form, 'keywords_present': keywords_present})
     return render(request, 'filters/qualify_url_paper_preservation.html', {'form': form})
@@ -255,7 +257,8 @@ def qualify_url_kaizen(request):
             else:
                 for keyword in keywords:
                     if keyword in str(html).lower():
-                        keywords_present.append(keyword)
+                        counter = str(html).lower().count(keyword)
+                        keywords_present.append([keyword, counter])
             return render(request, 'filters/qualify_url_kaizen.html',
                           {'form': form, 'keywords_present': keywords_present})
     return render(request, 'filters/qualify_url_kaizen.html', {'form': form})
@@ -299,7 +302,8 @@ def qualify_url_history(request):
             else:
                 for keyword in keywords:
                     if keyword in str(html).lower():
-                        keywords_present.append(keyword)
+                        counter = str(html).lower().count(keyword)
+                        keywords_present.append([keyword, counter])
             return render(request, 'filters/qualify_url_history.html',
                           {'form': form, 'keywords_present': keywords_present})
     return render(request, 'filters/qualify_url_history.html', {'form': form})
