@@ -214,7 +214,7 @@ def qualify_url_kaizen(request):
         if form.is_valid():
             keywords = [
                 "kaizen",
-                "lean",
+                " lean ",
                 "six sigma",
                 "agile",
                 "scrum",
@@ -222,9 +222,13 @@ def qualify_url_kaizen(request):
                 "process improvement",
                 "management",
                 "continuous improvement",
-                "5S",
+                " 5s ",
                 "waste elimination",
                 "eliminate waste",
+                "eliminating waste",
+                "toyota production system",
+                "elimination of waste",
+                "cut waste",
                 "pdca",
                 "plan do check act",
                 "work efficiency",
