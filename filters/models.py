@@ -13,3 +13,20 @@ class Filter(models.Model):
 
     def get_absolute_url(self):
         return reverse("filter:keywords_cbv")
+
+
+class VRPage(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+
+
+class Keyword(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    name = models.CharField(max_length=255)
+    vrpage = models.ForeignKey(VRPage)
+
+    def __str__(self):
+        return self.name

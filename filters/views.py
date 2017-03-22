@@ -12,7 +12,7 @@ from urllib.request import Request, urlopen
 from urllib.error import URLError, HTTPError
 
 from . import forms
-from .models import Filter
+from .models import Filter, Keyword
 from . import functions
 from . import mixins
 
@@ -104,23 +104,7 @@ def qualify_url_travel_warning(request):
     if request.method == 'POST':
         form = forms.QualifyURLFormTravelWarning(request.POST)
         if form.is_valid():
-            keywords = [
-                "travel warning",
-                "travel warnings",
-                "travel alert",
-                "travel alerts",
-                "travel safety",
-                "travel advisory",
-                "travel advisories",
-                "travel",
-                "traveler",
-                "travelers",
-                "traveling",
-                "warning",
-                "warnings",
-                "alert",
-                "alerts",
-            ]
+            keywords = [str(keyword) for keyword in Keyword.objects.filter(vrpage=2)]
             keywords_present = []
             try:
                 raw_url = form.cleaned_data['raw_url']
@@ -151,39 +135,7 @@ def qualify_url_paper_preservation(request):
     if request.method == 'POST':
         form = forms.QualifyURLFormPaperPreservation(request.POST)
         if form.is_valid():
-            keywords = [
-                "paper preservation",
-                "photo preservation",
-                "document preservation",
-                "book preservation",
-                "paper conservation",
-                "photo conservation",
-                "document conservation",
-                "book conservation",
-                "preserve paper",
-                "preserve photo",
-                "preserve document",
-                "preserve book",
-                "archive paper",
-                "archive photo",
-                "archive document",
-                "archive book",
-                "protect paper",
-                "protect photo",
-                "protect document",
-                "protect book",
-                "historic preservation",
-                "preservation office",
-                " paper ",
-                " book ",
-                " photo ",
-                "pictures",
-                "photograph",
-                "preservation",
-                "conservation",
-                "library",
-                "museum",
-            ]
+            keywords = [str(keyword) for keyword in Keyword.objects.filter(vrpage=1)]
             keywords_present = []
             try:
                 raw_url = form.cleaned_data['raw_url']
@@ -214,32 +166,7 @@ def qualify_url_kaizen(request):
     if request.method == 'POST':
         form = forms.QualifyURLFormKaizen(request.POST)
         if form.is_valid():
-            keywords = [
-                "kaizen",
-                " lean ",
-                "six sigma",
-                "agile",
-                "scrum",
-                "kanban",
-                "process improvement",
-                "management",
-                "continuous improvement",
-                " 5s ",
-                "waste elimination",
-                "eliminate waste",
-                "eliminating waste",
-                "toyota production system",
-                "elimination of waste",
-                "cut waste",
-                "pdca",
-                "plan do check act",
-                "work efficiency",
-                "tqm",
-                "gemba",
-                "sixsigma",
-                "quality improvement",
-                "improvement"
-            ]
+            keywords = [str(keyword) for keyword in Keyword.objects.filter(vrpage=3)]
             keywords_present = []
             try:
                 raw_url = form.cleaned_data['raw_url']
@@ -270,21 +197,7 @@ def qualify_url_history(request):
     if request.method == 'POST':
         form = forms.QualifyURLFormHistory(request.POST)
         if form.is_valid():
-            keywords = [
-                "scrapbook",
-                "scrapbooking",
-                "scrap book",
-                "photo album",
-                "memory book",
-                "commonplace book",
-                "photograph",
-                "extra-illustrating",
-                "extra-illustrated",
-                "grangerizing",
-                "granger",
-                "book of scraps",
-                "memorabilia"
-            ]
+            keywords = [str(keyword) for keyword in Keyword.objects.filter(vrpage=4)]
             keywords_present = []
             try:
                 raw_url = form.cleaned_data['raw_url']
