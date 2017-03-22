@@ -12,7 +12,7 @@ from urllib.request import Request, urlopen
 from urllib.error import URLError, HTTPError
 
 from . import forms
-from .models import Filter, Keyword
+from .models import Filter, Keyword, VRPage
 from . import functions
 from . import mixins
 
@@ -95,16 +95,18 @@ def url_to_domain(request):
 
 @login_required
 def qualify_url_list(request):
-    return render(request, 'filters/qualify_url_list.html')
+    vrpages = VRPage.objects.all()
+    return render(request, 'filters/qualify_url_list.html', {'vrpages': vrpages})
 
 
 @login_required
-def qualify_url_travel_warning(request):
-    form = forms.QualifyURLFormTravelWarning()
+def qualify_url(request, vrpage_pk):
+    form = forms.QualifyURLForm()
+    vrpage = get_object_or_404(VRPage, pk=vrpage_pk)
     if request.method == 'POST':
-        form = forms.QualifyURLFormTravelWarning(request.POST)
+        form = forms.QualifyURLForm(request.POST)
         if form.is_valid():
-            keywords = [str(keyword) for keyword in Keyword.objects.filter(vrpage=2)]
+            keywords = [str(keyword) for keyword in Keyword.objects.filter(vrpage=vrpage_pk)]
             keywords_present = []
             try:
                 raw_url = form.cleaned_data['raw_url']
@@ -124,102 +126,9 @@ def qualify_url_travel_warning(request):
                     if keyword in str(html).lower():
                         counter = str(html).lower().count(keyword)
                         keywords_present.append([keyword, counter])
-            return render(request, 'filters/qualify_url_travel_warning.html',
-                          {'form': form, 'keywords_present': keywords_present})
-    return render(request, 'filters/qualify_url_travel_warning.html', {'form': form})
-
-
-@login_required
-def qualify_url_paper_preservation(request):
-    form = forms.QualifyURLFormPaperPreservation()
-    if request.method == 'POST':
-        form = forms.QualifyURLFormPaperPreservation(request.POST)
-        if form.is_valid():
-            keywords = [str(keyword) for keyword in Keyword.objects.filter(vrpage=1)]
-            keywords_present = []
-            try:
-                raw_url = form.cleaned_data['raw_url']
-                req = Request(raw_url, headers={
-                    'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:47.0) Gecko/20100101 Firefox/47.0'})
-                html = urlopen(req).read()
-            except HTTPError as e:
-                print("The server couldn't fulfill the request")
-                print("Error code: ", e.code)
-            except URLError as e:
-                print("We failed to reach a server.")
-                print("Reason: ", e.reason)
-            except:
-                print("Unknown Error")
-            else:
-                for keyword in keywords:
-                    if keyword in str(html).lower():
-                        counter = str(html).lower().count(keyword)
-                        keywords_present.append([keyword, counter])
-            return render(request, 'filters/qualify_url_paper_preservation.html',
-                          {'form': form, 'keywords_present': keywords_present})
-    return render(request, 'filters/qualify_url_paper_preservation.html', {'form': form})
-
-
-@login_required
-def qualify_url_kaizen(request):
-    form = forms.QualifyURLFormKaizen()
-    if request.method == 'POST':
-        form = forms.QualifyURLFormKaizen(request.POST)
-        if form.is_valid():
-            keywords = [str(keyword) for keyword in Keyword.objects.filter(vrpage=3)]
-            keywords_present = []
-            try:
-                raw_url = form.cleaned_data['raw_url']
-                req = Request(raw_url, headers={
-                    'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:47.0) Gecko/20100101 Firefox/47.0'})
-                html = urlopen(req).read()
-            except HTTPError as e:
-                print("The server couldn't fulfill the request")
-                print("Error code: ", e.code)
-            except URLError as e:
-                print("We failed to reach a server.")
-                print("Reason: ", e.reason)
-            except:
-                print("Unknown Error")
-            else:
-                for keyword in keywords:
-                    if keyword in str(html).lower():
-                        counter = str(html).lower().count(keyword)
-                        keywords_present.append([keyword, counter])
-            return render(request, 'filters/qualify_url_kaizen.html',
-                          {'form': form, 'keywords_present': keywords_present})
-    return render(request, 'filters/qualify_url_kaizen.html', {'form': form})
-
-
-@login_required
-def qualify_url_history(request):
-    form = forms.QualifyURLFormHistory()
-    if request.method == 'POST':
-        form = forms.QualifyURLFormHistory(request.POST)
-        if form.is_valid():
-            keywords = [str(keyword) for keyword in Keyword.objects.filter(vrpage=4)]
-            keywords_present = []
-            try:
-                raw_url = form.cleaned_data['raw_url']
-                req = Request(raw_url, headers={
-                    'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:47.0) Gecko/20100101 Firefox/47.0'})
-                html = urlopen(req).read()
-            except HTTPError as e:
-                print("The server couldn't fulfill the request")
-                print("Error code: ", e.code)
-            except URLError as e:
-                print("We failed to reach a server.")
-                print("Reason: ", e.reason)
-            except:
-                print("Unknown Error")
-            else:
-                for keyword in keywords:
-                    if keyword in str(html).lower():
-                        counter = str(html).lower().count(keyword)
-                        keywords_present.append([keyword, counter])
-            return render(request, 'filters/qualify_url_history.html',
-                          {'form': form, 'keywords_present': keywords_present})
-    return render(request, 'filters/qualify_url_history.html', {'form': form})
+            return render(request, 'filters/qualify_url.html',
+                          {'form': form, 'keywords_present': keywords_present, 'vrpage': vrpage})
+    return render(request, 'filters/qualify_url.html', {'form': form, 'vrpage': vrpage})
 
 
 class KeywordListView(LoginRequiredMixin, ListView):
