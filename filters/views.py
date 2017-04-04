@@ -12,7 +12,7 @@ from urllib.request import Request, urlopen
 from urllib.error import URLError, HTTPError
 
 from . import forms
-from .models import Filter, Keyword, VRPage
+from .models import Filter, Keyword, VRPage, LinkedinProfile
 from . import functions
 from . import mixins
 
@@ -154,4 +154,21 @@ class KeywordUpdateView(LoginRequiredMixin, mixins.PageTitleMixin, UpdateView):
 class KeywordDeleteView(LoginRequiredMixin, DeleteView):
     model = Filter
     success_url = reverse_lazy("filter:keywords_cbv")
+
+
+@login_required
+def linkedin_profile_list(request):
+    linkedin_profiles = LinkedinProfile.objects.all()
+    return render(request, 'filters/linkedin_profile_list.html', {'linkedin_profiles': linkedin_profiles})
+
+@login_required
+def linkedin_profile_create(request):
+    form = forms.LinkedinProfileForm()
+    linkedin_profiles = len(LinkedinProfile.objects.all())
+    if request.method == 'POST':
+        form = forms.LinkedinProfileForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('filter:linkedin'))
+    return render(request, 'filters/linkedin.html', {'form': form, 'profiles': linkedin_profiles})
 

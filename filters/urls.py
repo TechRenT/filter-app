@@ -15,4 +15,6 @@ urlpatterns = [
     url(r'^keyword_create_cbv/$', views.KeywordCreateView.as_view(), name='keyword_create_cbv'),
     url(r'^(?P<pk>\d+)/keyword_edit_cbv/$', views.KeywordUpdateView.as_view(), name='keyword_edit_cbv'),
     url(r'^(?P<pk>\d+)/keyword_delete_cbv/$', views.KeywordDeleteView.as_view(), name='keyword_delete_cbv'),
+    url(r'^linkedin/$', views.linkedin_profile_create, name='linkedin'),
+    url(r'^linkedin_list/$', views.linkedin_profile_list, name='linkedin_list'),
 ]

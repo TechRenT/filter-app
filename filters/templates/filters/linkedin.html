@@ -1,0 +1,34 @@
+{% extends "filters/layout.html" %}
+{% load widget_tweaks %}
+
+{% block title %}LinkedIn Profile Checker{% endblock %}
+
+{% block content %}
+    <div class="container text-xs-center">
+        <div class="jumbotron jumbotron-fluid bg-success">
+            <div class="container text-sm-center">
+                <h3 class="display-3">LinkedIn Profile Checker</h3>
+                <h5>Current total of linkedin profiles: {{ profiles }}</h5>
+            </div>
+        </div>
+        <form action="" method="POST" class="m-b-3">
+            {% for hidden in form.hidden_fields %}
+                {{ hidden }}
+            {% endfor %}
+
+            <h4 class="m-b-2">LinkedIn Profile URL</h4>
+            {{ form.non_field_errors }}
+            {% for field in form.visible_fields %}
+                <div class="form-group">
+                    {{ field|add_class:'form-control' }}
+                    {#<textarea class="form-control" id="inputurl" rows="15"></textarea>#}
+                </div>
+            {% endfor %}
+            {% csrf_token %}
+            <input type="submit" value="Check" class="btn btn-success btn-lg">
+        </form>
+        <hr class="m-t-3">
+        <a class="btn btn-primary" href="{% url 'filter:linkedin_list' %}" role="button">View Profile List</a>
+        <h6 class="m-t-3">Version 1.0 by Renelle Tigue</h6>
+    </div>
+{% endblock %}

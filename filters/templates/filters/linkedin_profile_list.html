@@ -1,0 +1,21 @@
+{% extends "filters/layout.html" %}
+
+{% block title %}LinkedIn Profiles{% endblock %}
+
+{% block content %}
+    <div class="container text-xs-center">
+        <div>
+        <h4 class="m-b-2">LinkedIn Profile List</h4>
+        <h4>Total: {{ linkedin_profiles|length }}</h4>
+        <table class="table table-hover">
+            <tbody>
+                {% for profile in linkedin_profiles %}
+                <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td class="text-left">{{ profile.profile_link }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
