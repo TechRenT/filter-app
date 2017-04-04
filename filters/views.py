@@ -1,4 +1,5 @@
 import tldextract
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.urlresolvers import reverse, reverse_lazy
@@ -169,6 +170,8 @@ def linkedin_profile_create(request):
         form = forms.LinkedinProfileForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.add_message(request, messages.SUCCESS,
+                'LinkedIn profile has been successfully added!')
             return HttpResponseRedirect(reverse('filter:linkedin'))
     return render(request, 'filters/linkedin.html', {'form': form, 'profiles': linkedin_profiles})
 

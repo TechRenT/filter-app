@@ -11,13 +11,25 @@
                 <h5>Current total of linkedin profiles: {{ profiles }}</h5>
             </div>
         </div>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-success" role="alert">
+                  <strong>Well done!</strong> {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        {% if form.non_field_errors %}
+            <div class="alert alert-danger" role="alert">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
         <form action="" method="POST" class="m-b-3">
             {% for hidden in form.hidden_fields %}
                 {{ hidden }}
             {% endfor %}
 
             <h4 class="m-b-2">LinkedIn Profile URL</h4>
-            {{ form.non_field_errors }}
             {% for field in form.visible_fields %}
                 <div class="form-group">
                     {{ field|add_class:'form-control' }}
