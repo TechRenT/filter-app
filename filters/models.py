@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.db import models
 
@@ -30,3 +31,9 @@ class Keyword(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class LinkedinProfile(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    profile_link = models.URLField(max_length=200)
+    checker = models.ForeignKey(User)
