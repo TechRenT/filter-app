@@ -7,15 +7,21 @@
         <div>
         <h4 class="m-b-2">LinkedIn Profile List</h4>
         <h4>Total: {{ linkedin_profiles|length }}</h4>
-        <table class="table table-hover">
+    </div>
+        <table class="table table-hover m-t-3">
+            <thead class="thead-default">
+                <tr>
+                    <th>#</th>
+                    <th class="text-xs-center">LinkedIn Profiles</th>
+                </tr>
+            </thead>
             <tbody>
                 {% for profile in linkedin_profiles %}
                 <tr>
                     <th scope="row">{{ forloop.counter }}</th>
-                    <td class="text-left">{{ profile.profile_link }}</td>
+                    <td class="text-xs-center">{{ profile.profile_link }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
-    </div>
 {% endblock %}
