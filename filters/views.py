@@ -1,5 +1,6 @@
 import requests
 import tldextract
+from bs4 import BeautifulSoup
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -117,6 +118,8 @@ def qualify_url(request, vrpage_pk):
                     'ContentDecodingError occurred!')
             else:
                 content = resp.text.lower()
+                soup = BeautifulSoup(content, 'html.parser')
+                content = soup.get_text()
                 if resp.ok:
                     for keyword in keywords:
                         if keyword in content:
