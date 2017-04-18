@@ -7,11 +7,28 @@
     <div class="container text-xs-center">
         <div class="jumbotron jumbotron-fluid bg-success">
             <div class="container text-sm-center">
-                <h3 class="display-2">Qualify URL App</h3>
+                <h3 class="display-3">Qualify URL App</h3>
                 <p class="lead">Check URL's content for certain keywords</p>
                 <p class="lead">VR Page: {{ vrpage.name }}</p>
             </div>
         </div>
+        {% if messages %}
+            {% for message in messages %}
+                {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                    <div class="alert alert-success" role="alert">
+                        <strong>Well done!</strong> {{ keywords_present|length }} keyword{{ keywords_present|length|pluralize }} {{ message }}
+                    </div>
+                {% elif message.level == DEFAULT_MESSAGE_LEVELS.INFO %}
+                    <div class="alert alert-info" role="alert">
+                        <strong>I'm sorry!</strong> {{ message }}
+                    </div>
+                {% elif message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                    <div class="alert alert-danger" role="alert">
+                        <strong>Oh snap!</strong> {{ message }}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
         <form action="" method="POST">
             {% for hidden in form.hidden_fields %}
                 {{ hidden }}

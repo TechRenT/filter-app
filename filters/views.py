@@ -1,3 +1,4 @@
+import requests
 import tldextract
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -9,8 +10,7 @@ from django.views.generic import (
     ListView,
     CreateView, UpdateView, DeleteView
 )
-from urllib.request import Request, urlopen
-from urllib.error import URLError, HTTPError
+from requests import exceptions
 
 from . import forms
 from .models import Filter, Keyword, VRPage, LinkedinProfile
@@ -109,26 +109,31 @@ def qualify_url(request, vrpage_pk):
         if form.is_valid():
             keywords = [str(keyword) for keyword in Keyword.objects.filter(vrpage=vrpage_pk)]
             keywords_present = []
+            raw_url = form.cleaned_data['raw_url']
             try:
-                raw_url = form.cleaned_data['raw_url']
-                req = Request(raw_url, headers={
-                    'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:47.0) Gecko/20100101 Firefox/47.0'})
-                html = urlopen(req).read()
-            except HTTPError as e:
-                print("The server couldn't fulfill the request")
-                print("Error code: ", e.code)
-            except URLError as e:
-                print("We failed to reach a server.")
-                print("Reason: ", e.reason)
-            except:
-                print("Unknown Error")
+                resp = requests.get(raw_url)
+            except exceptions.ContentDecodingError:
+                messages.add_message(request, messages.ERROR,
+                    'ContentDecodingError occurred!')
             else:
-                for keyword in keywords:
-                    if keyword in str(html).lower():
-                        counter = str(html).lower().count(keyword)
-                        keywords_present.append([keyword, counter])
-            return render(request, 'filters/qualify_url.html',
-                          {'form': form, 'keywords_present': keywords_present, 'vrpage': vrpage})
+                content = resp.text.lower()
+                if resp.ok:
+                    for keyword in keywords:
+                        if keyword in content:
+                            counter = content.count(keyword)
+                            keywords_present.append([keyword, counter])
+                    if keywords_present:
+                        messages.add_message(request, messages.SUCCESS,
+                            "found.")
+                    else:
+                        messages.add_message(request, messages.INFO,
+                            'No keywords found.')
+                else:
+                    messages.add_message(request, messages.ERROR,
+                        'An error occurred. Error code: {}'.format(resp.status_code))
+
+                return render(request, 'filters/qualify_url.html',
+                              {'form': form, 'keywords_present': keywords_present, 'vrpage': vrpage})
     return render(request, 'filters/qualify_url.html', {'form': form, 'vrpage': vrpage})
 
 
