@@ -1,3 +1,4 @@
+import html5lib
 import requests
 import tldextract
 from bs4 import BeautifulSoup
@@ -118,7 +119,7 @@ def qualify_url(request, vrpage_pk):
                     'ContentDecodingError occurred!')
             else:
                 content = resp.text.lower()
-                soup = BeautifulSoup(content, 'html.parser')
+                soup = BeautifulSoup(content, 'html5lib')
                 content = soup.get_text()
                 if resp.ok:
                     for keyword in keywords:
