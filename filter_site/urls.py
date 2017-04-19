@@ -26,6 +26,7 @@ urlpatterns = [
     url(r'^accounts/', include('accounts.urls', namespace="accounts")),
     url(r'^accounts/', include('django.contrib.auth.urls')),
     url(r'', include('filters.urls', namespace="filter")),
+    url(r'^qualify_urls/', include('qualify_urls.urls', namespace="qualify")),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

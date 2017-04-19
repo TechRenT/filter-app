@@ -1,0 +1,54 @@
+{% extends "filters/layout.html" %}
+{% load widget_tweaks %}
+
+{% block title %}Qualify URLs{% endblock %}
+
+{% block content %}
+    <div class="container text-xs-center">
+      <div class="jumbotron jumbotron-fluid bg-success">
+        <div class="container text-sm-center">
+          <h1 class="display-4">Qualify URLs</h1>
+          <p class="lead">Check each URL if it contains related keywords</p>
+        </div>
+      </div>
+      <div>
+        <h4 class="m-b-2">Please upload your raw urls in csv format below.</h4>
+        <form enctype="multipart/form-data" action="" method="POST">
+            {{ form.as_p }}
+            {% csrf_token %}
+            <input type="submit" value="Qualify" class="btn btn-success btn-lg">
+        </form>
+      </div>
+      <hr>
+      {% if raw_urls %}
+          <div class="row m-b-3">
+            <div class="col-lg-6 push-lg-3">
+              <ul class="list-group">
+                <li class="list-group-item">
+                  <h5 class="list-group-item-heading">Number of raw urls
+                    <span class="tag tag-info tag-pill pull-xs-right">{{ raw_urls|length }}</span>
+                  </h5>
+                </li>
+                <li class="list-group-item">
+                  <h5 class="list-group-item-heading">Raw urls with keywords
+                    <a href="#"><span class="tag tag-danger tag-pill pull-xs-right">{{ has_keywords|length }}</span></a>
+                    <a href="#"><span class="tag tag-danger tag-pill pull-xs-right">Download</span></a>
+                  </h5>
+                </li>
+                <li class="list-group-item">
+                  <h5 class="list-group-item-heading">Raw urls that have no keywords
+                    <a href="#"><span class="tag tag-success tag-pill pull-xs-right">{{ no_keywords|length }}</span></a>
+                    <a href="#"><span class="tag tag-success tag-pill pull-xs-right">Download</span></a>
+                  </h5>
+                </li>
+                <li class="list-group-item">
+                  <h5 class="list-group-item-heading">Raw urls that have error when scraping
+                    <a href="#"><span class="tag tag-success tag-pill pull-xs-right">{{ urls_with_errors|length }}</span></a>
+                    <a href="#"><span class="tag tag-success tag-pill pull-xs-right">Download</span></a>
+                  </h5>
+                </li>
+              </ul>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

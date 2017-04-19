@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'import_export',
     'accounts',
     'filters',
+    'qualify_urls',
 ]
 
 MIDDLEWARE_CLASSES = [
