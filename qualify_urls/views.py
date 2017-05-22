@@ -59,3 +59,4 @@ def qualify_form(request):
                                                            'no_keywords': no_keywords,
                                                            'urls_with_errors': urls_with_errors,})
     return render(request, 'qualify_urls/qualify_form.html', {'form': form})
+

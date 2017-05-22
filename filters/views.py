@@ -141,6 +141,11 @@ def qualify_url(request, vrpage_pk):
     return render(request, 'filters/qualify_url.html', {'form': form, 'vrpage': vrpage})
 
 
+def vrpage_keywords_list(request, vrpage_pk):
+    keywords = Keyword.objects.filter(vrpage=vrpage_pk)
+    return render(request, 'filters/vrpage_keywords_list.html', {'keywords': keywords})
+
+
 class KeywordListView(LoginRequiredMixin, ListView):
     context_object_name = "keywords"
     model = Filter

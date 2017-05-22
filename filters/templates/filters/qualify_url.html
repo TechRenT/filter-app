@@ -54,6 +54,7 @@
                 {% endfor %}
             </ul>
         {% endif %}
+        <a href="{% url 'filter:vrpage_keywords_list' vrpage_pk=vrpage.pk %}"><p class="m-t-1">List of Keywords for This VR Page</p></a>
         <h6 class="m-t-3">Version 1.0 by Renelle Tigue</h6>
     </div>
 {% endblock %}

@@ -10,6 +10,7 @@ urlpatterns = [
     url(r'^(?P<keyword_pk>\d+)/keyword_delete/$', views.keyword_delete, name='keyword_delete'),
     url(r'^url_to_domain/$', views.url_to_domain, name='url_to_domain'),
     url(r'^(?P<vrpage_pk>\d+)/qualify_url/$', views.qualify_url, name='qualify_url'),
+    url(r'^(?P<vrpage_pk>\d+)/vrpage_keywords_list/$', views.vrpage_keywords_list, name='vrpage_keywords_list'),
     url(r'^qualify_url_list/$', views.qualify_url_list, name='qualify_url_list'),
     url(r'^keywords_cbv/$', views.KeywordListView.as_view(), name='keywords_cbv'),
     url(r'^keyword_create_cbv/$', views.KeywordCreateView.as_view(), name='keyword_create_cbv'),

@@ -1,0 +1,26 @@
+{% extends "filters/layout.html" %}
+
+{% block title %}Keywords{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h2>Keywords List</h2>
+        <table class="table table-hover">
+            <thead class="thead-default">
+                <tr>
+                    <th>#</th>
+                    <th>Keyword</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for keyword in keywords %}
+                <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{ keyword.name }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h6 class="text-xs-center">Version 1.0 by Renelle Tigue</h6>
+    </div>
+{% endblock %}
