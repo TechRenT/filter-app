@@ -42,7 +42,7 @@ class LinkedinProfile(models.Model):
         return self.profile_link
 
 
-class ExcepTld(models.Model):
+class ExceptTld(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     tld = models.CharField(max_length=15)
 
