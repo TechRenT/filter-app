@@ -13,9 +13,13 @@ def csv_reader(filename, list):
         for row in read_csv:
             list.append(row)
 
-def filter_shepard(raw_urls, keywords, bad_urls, good_urls):
+def filter_shepard(raw_urls, keywords, bad_urls, good_urls, tlds, bad_tlds):
     """Check each raw url whether it's good or bad for shepard raw urls"""
     for url in raw_urls:
+        tld = tldextract.extract(url[0]).suffix
+        if tld in tlds:
+            bad_tlds.append(url)
+            continue
         if url[2] == "200 OK" and int(url[3]) >= 3:
             for keyword in keywords:
                 if keyword in url[0]:

@@ -6,6 +6,7 @@ myvenv
 .DS_Store
 /media/badurls.csv
 /media/cleanurls.csv
+/media/badtlds.csv
 .idea/
 todo
 

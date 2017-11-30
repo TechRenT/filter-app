@@ -15,7 +15,7 @@ from django.views.generic import (
 from requests import exceptions
 
 from . import forms
-from .models import Filter, Keyword, VRPage, LinkedinProfile
+from .models import Filter, Keyword, VRPage, LinkedinProfile, ExceptTld
 from . import functions
 from . import mixins
 
@@ -35,18 +35,23 @@ def upload_file(request):
             raw_urls = []
             bad_urls = []
             good_urls = []
+            bad_tlds = []
             keywords = [str(keyword) for keyword in Filter.objects.all()]
+            tlds = [str(tld) for tld in ExceptTld.objects.all()]
             functions.csv_reader('media/raw_urls.csv', raw_urls)
             if form.cleaned_data['shepard_urls'] == True:
-                functions.filter_shepard(raw_urls, keywords, bad_urls, good_urls)
+                functions.filter_shepard(raw_urls, keywords, bad_urls,
+                                         good_urls, tlds, bad_tlds)
             else:
                 functions.filter_arrow(raw_urls, keywords, bad_urls, good_urls)
             functions.save_csv('media/cleanurls.csv', good_urls)
             functions.save_csv('media/badurls.csv', bad_urls)
+            functions.save_csv('media/badtlds.csv', bad_tlds)
             return render(request, 'filters/upload.html', {'form': form,
                                                            'raw_urls': raw_urls,
                                                            'good_urls': good_urls,
-                                                           'bad_urls': bad_urls,})
+                                                           'bad_urls': bad_urls,
+                                                           'bad_tlds': bad_tlds})
     else:
         form = forms.UploadFileForm()
     return render(request, 'filters/upload.html', {'form': form})
@@ -188,4 +193,3 @@ def linkedin_profile_create(request):
                 'LinkedIn profile has been successfully added!')
             return HttpResponseRedirect(reverse('filter:linkedin'))
     return render(request, 'filters/linkedin.html', {'form': form, 'profiles': linkedin_profiles})
-

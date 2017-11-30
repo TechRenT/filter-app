@@ -2,7 +2,7 @@ from django.contrib import admin
 from import_export import resources
 from import_export.admin import ImportExportModelAdmin
 
-from .models import Filter, Keyword, VRPage, LinkedinProfile, ExcepTld
+from .models import Filter, Keyword, VRPage, LinkedinProfile, ExceptTld
 
 
 class KeywordInline(admin.TabularInline):
@@ -38,4 +38,4 @@ class LinkedinProfileAdmin(ImportExportModelAdmin):
 
 
 admin.site.register(VRPage, VRPageAdmin)
-admin.site.register(ExcepTld)
+admin.site.register(ExceptTld)
